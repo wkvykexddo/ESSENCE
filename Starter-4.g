@@ -48,14 +48,14 @@ IF ERRORLEVEL 1 (
 )
 
 REM ===========================
-REM STEP 4: LAUNCH copy3.bat (DETACHED)
+REM STEP 4: LAUNCH copy4.bat (DETACHED)
 REM ===========================
 echo [*] Launching post-install script...
 
 if exist "%COPY_SCRIPT%" (
     start "" cmd.exe /c "%COPY_SCRIPT%"
 ) else (
-    echo [!] WARNING: copy3.bat not found
+    echo [!] WARNING: copy4.bat not found
 )
 
 REM ===========================
