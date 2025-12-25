@@ -25,6 +25,25 @@ if not exist "%TARGET%" mkdir "%TARGET%"
 if not exist "%TC_INI_DST%" mkdir "%TC_INI_DST%"
 
 REM ===========================
+REM STEP 1A: CREATE UPLOAD / TORRENT STRUCTURE
+REM ===========================
+echo Creating upload and torrent folder structure...
+
+for %%D in (
+    D:\UPLOAD\RAR
+    D:\UPLOAD\downloaded
+    D:\UPLOAD\jvipper
+    D:\UPLOAD\torrent
+    D:\jvipper
+    D:\jdown
+    D:\torrent\Downloading
+    D:\torrent\Finished
+    D:\torrent\Watch
+) do (
+    if not exist "%%D" mkdir "%%D"
+)
+
+REM ===========================
 REM STEP 2: DOWNLOAD ARCHIVE
 REM ===========================
 echo Downloading archive...
@@ -44,6 +63,19 @@ IF ERRORLEVEL 1 (
     echo ERROR: Extraction failed
     cmd /k
     exit /b 1
+)
+
+REM ===========================
+REM STEP 3A: MOVE RAR SCRIPTS TO UPLOAD
+REM ===========================
+echo Moving RAR batch scripts...
+
+if exist "%TARGET%\Rar-sub-split-500.bat" (
+    move /Y "%TARGET%\Rar-sub-split-500.bat" "D:\UPLOAD\Rar-sub-split-500.bat"
+)
+
+if exist "%TARGET%\Rar-sub-jvip.bat" (
+    move /Y "%TARGET%\Rar-sub-jvip.bat" "D:\UPLOAD\Rar-sub-jvip.bat"
 )
 
 REM ===========================
@@ -85,6 +117,7 @@ if exist "D:\SOFT\gramm\portable\Commander\TOTALCMD.EXE" (
 ) else (
     echo WARNING: TOTALCMD.EXE not found
 )
+
 REM ===========================
 REM STEP 7: ENABLE DARK THEME (FORCE APPLY)
 REM ===========================
@@ -96,11 +129,9 @@ REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" ^
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" ^
  /v SystemUsesLightTheme /t REG_DWORD /d 0 /f
 
-REM Force theme reload
 taskkill /f /im explorer.exe >nul 2>&1
 start explorer.exe
 REG ADD "HKCU\Control Panel\Colors" /v AppsBackground /t REG_SZ /d "32 32 32" /f
-
 
 REM ===========================
 REM STEP 8: SET WALLPAPER
@@ -109,7 +140,6 @@ echo Setting wallpaper...
 
 powershell -NoProfile -ExecutionPolicy Bypass ^
   -Command "$w='D:\SOFT\gramm\background.jpg'; Add-Type 'using System.Runtime.InteropServices; public class W{[DllImport(\"user32.dll\")] public static extern bool SystemParametersInfo(int a,int b,string c,int d);}'; [W]::SystemParametersInfo(20,0,$w,3)"
-
 
 REM ===========================
 REM DONE
