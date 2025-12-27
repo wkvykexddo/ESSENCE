@@ -12,7 +12,7 @@ SET PASSWORD=protocol
 SET SEVENZIP="C:\Program Files\7-Zip\7z.exe"
 
 REM List of scripts to run
-SET SCRIPTS=copy1.bat copy2.bat copy7.bat copy9.bat copy10.bat copy11.bat
+SET SCRIPTS=copy5.bat copy12.bat copy14.bat copy17.bat
 
 REM ===========================
 REM STEP 1: PREPARE FOLDERS
